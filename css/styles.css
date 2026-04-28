@@ -1,0 +1,655 @@
+/* ====================================================
+   iPhone Uno Palermo — overrides puntuales sobre Tailwind
+   ==================================================== */
+
+/* ----- Tipografía base ----- */
+:root {
+  --ink:   #0E0E0E;
+  --bone:  #F5F1E8;
+  --steel: #6B6B6B;
+  --pulse: #FF4D2E;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-feature-settings: "ss01", "cv11";
+  background-color: var(--bone);
+}
+
+/* Display siempre con tracking ajustado y ligaduras activas */
+.font-display {
+  font-feature-settings: "ss01", "cv11", "calt";
+  letter-spacing: -0.02em;
+}
+
+/* Mono con tabular-nums siempre — los precios alinean al toggle USD/ARS */
+.font-mono {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ----- Selección de texto ----- */
+::selection {
+  background: var(--pulse);
+  color: var(--bone);
+}
+
+/* ----- Focus visible — accesibilidad ----- */
+*:focus-visible {
+  outline: 2px solid var(--pulse);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+button:focus-visible,
+a:focus-visible {
+  outline-offset: 4px;
+}
+
+/* ----- Nav: blur progresivo al scrollear ----- */
+#nav {
+  background-color: transparent;
+  backdrop-filter: blur(0);
+  border-bottom: 1px solid transparent;
+}
+#nav.scrolled {
+  background-color: rgba(245, 241, 232, 0.85);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border-bottom-color: rgba(14, 14, 14, 0.06);
+}
+
+/* En hero (fondo Ink), la nav arranca con texto Bone */
+body.nav-on-dark #nav:not(.scrolled) a,
+body.nav-on-dark #nav:not(.scrolled) [aria-label] {
+  color: var(--bone);
+}
+body.nav-on-dark #nav:not(.scrolled) a:hover {
+  color: var(--pulse);
+}
+
+/* ----- Reveal al entrar en viewport ----- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  will-change: opacity, transform;
+}
+[data-reveal].is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ----- Catálogo: cards ----- */
+.product-card {
+  position: relative;
+  background: #FFFFFF;
+  border: 1px solid rgba(14, 14, 14, 0.06);
+  border-radius: 20px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.product-card:hover {
+  border-color: var(--ink);
+  transform: translateY(-4px);
+}
+.product-image-container {
+  height: 110px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.product-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-video-box {
+  width: 520px;
+  height: 620px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  background: transparent;
+  border: none;
+  transform: translateX(80px);
+}
+
+.hero-product {
+  max-width: 420px;
+  margin-left: auto;
+}
+
+.hero-product video {
+  width: 100%;
+  height: auto;
+  transform: scale(0.85);
+}
+.hero-video-box video {
+  width: 500px;
+  height: 900px;
+  max-width: none;
+  object-fit: contain;
+  transform: scale(1.8);
+  opacity: 1 !important;
+  filter: brightness(1.4) contrast(1.15);
+  mix-blend-mode: normal !important;
+}
+.logo-icon {
+  height: 20px;
+  transition: 0.3s ease;
+}
+/* DEFAULT (cuando hace scroll → fondo claro) */
+.logo-icon {
+  content: url('../assets/img/logoNegro.png');
+}
+
+/* CUANDO ESTÁ SOBRE EL HERO NEGRO */
+body.nav-on-dark .logo-icon {
+  content: url('../assets/img/logoBlanco.png');
+}
+.product-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-name {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.product-capacity {
+  font-size: 14px;
+  color: #6B6B6B;
+  margin-top: 6px;
+}
+
+.product-image {
+  height: 90px;
+  object-fit: contain;
+}
+.product-card:hover .product-image {
+  transform: scale(1.08);
+}
+/* Layout editorial irregular del catálogo en desktop */
+@media (min-width: 1024px) {
+  #catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 24px;
+  }
+
+  /* Fila 1: 3 cards */
+  #catalog-grid > .product-card:nth-child(1),
+  #catalog-grid > .product-card:nth-child(2),
+  #catalog-grid > .product-card:nth-child(3) {
+    grid-column: span 4;
+  }
+
+  /* Fila 2: 2 cards */
+  #catalog-grid > .product-card:nth-child(4),
+  #catalog-grid > .product-card:nth-child(5) {
+    grid-column: span 6;
+  }
+
+  /* Fila 3: 2 cards */
+  #catalog-grid > .product-card:nth-child(6),
+  #catalog-grid > .product-card:nth-child(7) {
+    grid-column: span 6;
+  }
+
+  /* iPhone 15 destacado */
+  #catalog-grid > .product-card:nth-child(5) {
+    background: var(--ink);
+    color: var(--bone);
+    border-color: var(--ink);
+  } #catalog-grid > .product-card:nth-child(6) {
+    background: var(--ink);
+    color: var(--bone);
+    border-color: var(--ink);
+  }
+  
+  #catalog-grid > .product-card:nth-child(5) .product-capacity,
+  #catalog-grid > .product-card:nth-child(5) .price-label {
+    color: rgba(245, 241, 232, 0.6);
+  }
+  #catalog-grid > .product-card:nth-child(6) .product-capacity,
+  #catalog-grid > .product-card:nth-child(6) .price-label {
+    color: rgba(245, 241, 232, 0.6);
+  }
+
+  #catalog-grid > .product-card:nth-child(5) .product-cta {
+    border-color: rgba(245, 241, 232, 0.3);
+    color: var(--bone);
+  }
+  #catalog-grid > .product-card:nth-child(6) .product-cta {
+    border-color: rgba(245, 241, 232, 0.3);
+    color: var(--bone);
+  }
+
+
+  #catalog-grid > .product-card:nth-child(5) .product-cta:hover {
+    background: var(--bone);
+    color: var(--ink);
+  }
+  
+  #catalog-grid > .product-card:nth-child(6) .product-cta:hover {
+    background: var(--bone);
+    color: var(--ink);
+  }
+
+}
+
+/* Contenido interno de la card */
+.product-name {
+  font-family: 'Inter Tight', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: clamp(28px, 3vw, 40px);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.product-capacity {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--steel);
+}
+.text-bone\/30 {
+  color:rgba(255, 77, 45, 1);
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    transition: 0.3s ease;
+  }
+  
+  .contact-icon {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+    opacity: 0.8;
+    transition: 0.3s ease;
+  }
+  
+  .contact-link:hover .contact-icon {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  .footer-contact-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  
+  .footer-contact-icon {
+    width: 15px;
+    height: 15px;
+    fill: currentColor;
+    flex-shrink: 0;
+    opacity: 0.8;
+    transition: 0.3s ease;
+  }
+  
+  .footer-contact-link:hover .footer-contact-icon {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+.price-table {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-top: auto;
+  border-top: 1px solid rgba(14, 14, 14, 0.08);
+  padding-top: 16px;
+}
+.price-cell {
+  padding: 4px 0;
+}
+.price-cell + .price-cell {
+  border-left: 1px solid rgba(14, 14, 14, 0.08);
+  padding-left: 12px;
+}
+.price-label {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--steel);
+  display: block;
+  margin-bottom: 4px;
+}
+.price-value {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-weight: 500;
+  font-size: clamp(16px, 1.6vw, 20px);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+.price-currency {
+  font-size: 0.7em;
+  color: var(--steel);
+  margin-left: 4px;
+}
+.product-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 10px 16px;
+  border: 1px solid rgba(14, 14, 14, 0.15);
+  border-radius: 999px;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.product-cta:hover {
+  background: var(--ink);
+  color: var(--bone);
+  border-color: var(--ink);
+}
+.price-divider {
+  background: rgba(14, 14, 14, 0.08);
+}
+
+/* ----- Toggle USD / ARS ----- */
+.currency-btn {
+  cursor: pointer;
+  color: var(--steel);
+  background: transparent;
+}
+.currency-btn[aria-selected="true"] {
+  background: var(--ink);
+  color: var(--bone);
+}
+.currency-btn:hover:not([aria-selected="true"]) {
+  color: var(--ink);
+}
+
+/* ----- FAQ — quitar el marker nativo del details ----- */
+details summary::-webkit-details-marker { display: none; }
+details summary { -webkit-tap-highlight-color: transparent; }
+details[open] summary {
+  color: var(--ink);
+}
+
+/* ----- Cursor follower ----- */
+.cursor-follower {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--pulse);
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: normal;
+  transition: width 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+              height 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.25s ease;
+  opacity: 0;
+}
+.cursor-follower.is-active {
+  opacity: 1;
+}
+.cursor-follower.is-hover {
+  width: 40px;
+  height: 40px;
+  mix-blend-mode: difference;
+  background: var(--bone);
+}
+
+/* Solo en pointer fino — no cursor en touch */
+@media (hover: none), (pointer: coarse) {
+  .cursor-follower { display: none !important; }
+}
+
+/* ----- Hero placeholder grid pattern ----- */
+.hero-product-placeholder {
+  position: relative;
+  overflow: hidden;
+}
+.hero-product-placeholder::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(245, 241, 232, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 241, 232, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+}
+
+/* ----- Reduced motion ----- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .cursor-follower { display: none !important; }
+}
+
+/* ----- Tipografía responsive del footer ----- */
+footer .wordmark {
+  letter-spacing: -0.04em;
+}
+
+/* ----- Iframe del mapa: filtro sutil para integrarlo a la paleta ----- */
+#map-frame {
+  filter: grayscale(100%) contrast(0.9) brightness(1.05);
+  transition: filter 0.4s ease;
+}
+#map-frame:hover {
+  filter: grayscale(0%) contrast(1) brightness(1);
+}
+
+/* ----- Accesorios menores ----- */
+img { max-width: 100%; height: auto; display: block; }
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: var(--bone); }
+::-webkit-scrollbar-thumb { background: rgba(14, 14, 14, 0.15); border-radius: 999px; border: 3px solid var(--bone); }
+::-webkit-scrollbar-thumb:hover { background: rgba(14, 14, 14, 0.3); }
+.mobile-menu-btn {
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(14, 14, 14, 0.12);
+  border-radius: 999px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: rgba(245, 241, 232, 0.65);
+}
+
+.mobile-menu-btn span {
+  width: 16px;
+  height: 1.5px;
+  background: var(--ink);
+  border-radius: 999px;
+  transition: 0.25s ease;
+}
+
+.mobile-menu-btn.is-open span:first-child {
+  transform: translateY(3.5px) rotate(45deg);
+}
+
+.mobile-menu-btn.is-open span:last-child {
+  transform: translateY(-3.5px) rotate(-45deg);
+}
+
+.mobile-menu {
+  position: absolute;
+  top: 64px;
+  left: 0;
+  width: 100%;
+  background: rgba(245, 241, 232, 0.96);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(14, 14, 14, 0.08);
+  padding: 18px 24px 24px;
+  display: grid;
+  gap: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-20px) scale(0.98);
+  transition: 0.25s ease;
+}
+
+.mobile-menu.is-open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.mobile-menu a {
+  font-size: 18px;
+  font-weight: 500;
+  color: rgba(0,0,0,0.35);
+}
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.25s ease;
+  z-index: 40;
+}
+
+.mobile-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.mobile-menu a {
+  color: rgba(12, 12, 12, 0.899) !important;
+}
+
+.mobile-menu a:hover {
+  color: var(--pulse) !important;
+}
+
+body.nav-on-dark #nav:not(.scrolled) .mobile-menu a {
+  color: rgba(0, 0, 0, 0.35) !important;
+}
+
+body.nav-on-dark #nav:not(.scrolled) .mobile-menu a:hover {
+  color: var(--pulse) !important;
+}
+
+@media (max-width: 768px) {
+
+  /* ===== HERO GENERAL ===== */
+  #hero {
+    min-height: 100vh;
+    padding-top: 140px;
+    padding-bottom: 60px;
+    display: flex;
+    align-items: center;
+  }
+
+  #hero > div {
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+    margin-left: 0 !important;
+  }
+
+  /* ===== TEXTO ===== */
+  #hero h1 {
+    font-size: clamp(46px, 13vw, 68px) !important;
+    line-height: 0.96 !important;
+    letter-spacing: -0.045em !important;
+    margin-top: 10px;
+    max-width: 100%;
+  }
+
+  #hero h1 span {
+    display: block;
+    margin-top: 6px;
+  }
+
+  #hero p {
+    margin-top: 24px;
+    font-size: 16px;
+    line-height: 1.55;
+    max-width: 92%;
+  }
+
+  /* ===== BOTONES ===== */
+  #hero .mt-10 {
+    margin-top: 32px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  #hero .mt-10 a {
+    font-size: 11px;
+    padding: 14px 20px;
+  }
+
+  /* ===== VIDEO / PRODUCTO ===== */
+  .hero-video-box,
+  .hero-product {
+    display: none !important;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  /* ===== MENU HAMBURGUESA ===== */
+  .menu-toggle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+  }
+
+  .menu-toggle svg {
+    width: 18px;
+    height: 18px;
+    color: white;
+  }
+
+  /* ===== TEXTO SUPERIOR (ABIERTO) ===== */
+  #hero .font-mono {
+    opacity: 0.8;
+    margin-bottom: 18px;
+  }
+
+}

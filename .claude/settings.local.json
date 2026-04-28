@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(command -v sips)",
+      "Bash(command -v rsvg-convert)",
+      "Bash(command -v convert)",
+      "Bash(command -v magick)",
+      "Bash(command -v python3)",
+      "Bash(python3 -c \"from PIL import Image, ImageDraw, ImageFont; print\\('PIL OK'\\)\")",
+      "Bash(python3 _og-image-generator.py)",
+      "Bash(node -c /Users/mariasicco/Desktop/iphoneUNO/js/main.js)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(curl -s -I http://127.0.0.1:8765/)",
+      "Bash(curl -s -I http://127.0.0.1:8765/index.html)",
+      "Bash(curl -s http://127.0.0.1:8765/)",
+      "Bash(rm -rf /tmp/iphoneUNO_preview)",
+      "Bash(mkdir -p /tmp/iphoneUNO_preview)",
+      "Bash(cp -R /Users/mariasicco/Desktop/iphoneUNO/. /tmp/iphoneUNO_preview/)",
+      "Read(//tmp/**)"
+    ]
+  }
+}
