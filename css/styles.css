@@ -11,6 +11,9 @@
 }
 
 html {
+  background: #0E0E0E;
+  margin: 0;
+  padding: 0;
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -18,8 +21,10 @@ html {
 }
 
 body {
+  background: #0E0E0E;
+  margin: 0;
+  padding: 0;
   font-feature-settings: "ss01", "cv11";
-  background-color: var(--bone);
 }
 
 /* Display siempre con tracking ajustado y ligaduras activas */
