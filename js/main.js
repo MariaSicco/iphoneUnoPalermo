@@ -290,6 +290,16 @@ function bindCursorFollower() {
   });
 }
 
+function bindScrollIndicator() {
+  const indicator = document.querySelector('.scroll-down-indicator');
+  const hero = document.getElementById('hero');
+  if (!indicator || !hero) return;
+
+  new IntersectionObserver(([entry]) => {
+    indicator.classList.toggle('is-hidden', !entry.isIntersecting);
+  }, { threshold: 0.1 }).observe(hero);
+}
+
 function bindMobileMenu() {
   const btn = document.getElementById('mobile-menu-btn');
   const menu = document.getElementById('mobile-menu');
@@ -318,6 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
   bindReveals();
   bindCursorFollower();
   bindMobileMenu();
+  bindScrollIndicator();
 });
 
   const btn = document.getElementById("scrollTopBtn");
